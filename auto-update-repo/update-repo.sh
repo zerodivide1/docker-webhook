@@ -49,8 +49,12 @@ if [[ -z ${GITHUB_USER} ]] || [[ -z ${GITHUB_PASS} ]]; then
   argmissing
 else
   if [[ -n $(echo "$@" | grep "\-\-write-crontab") ]]; then
-    echo "Crontab entry is being created."
-    crontab -l | { cat; echo -e "# Check for webhook releases every five minutes\n*/5 * * * * ${SCRIPTPATH}/${SCRIPTNAME} --user ${GITHUB_USER} --password ${GITHUB_PASS}"; } | crontab -
+    if [[ -z $(crontab -l | grep ${SCRIPTNAME}) ]]; then
+      echo "Crontab entry is being created."
+      crontab -l | { cat; echo -e "# Check for webhook releases every five minutes\n*/5 * * * * ${SCRIPTPATH}/${SCRIPTNAME} --user ${GITHUB_USER} --password ${GITHUB_PASS}"; } | crontab -
+    else
+      echo "Crontab entry already exists."
+    fi
   fi
   check_and_update
 fi
