@@ -7,6 +7,8 @@ SCRIPTPATH=$(readlink -f "$(dirname "$(readlink -f ${0})")")
 SCRIPTNAME=$(basename ${0})
 
 check_and_update() {
+  # Get inside the git repo directory
+  cd ${SCRIPTPATH}/.. || exit
   # Get latest updates to the repo
   git reset --hard && git pull
 
