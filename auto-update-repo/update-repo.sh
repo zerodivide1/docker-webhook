@@ -17,7 +17,7 @@ check_and_update() {
   LOCAL_RELEASE=$(grep "^ENV.*WEBHOOK_VERSION" ${SCRIPTPATH}/../Dockerfile | awk '{ print $NF }')
 
   # Compare releases and update Dockerfile in case they differ
-  if [[ "${LOCAL_RELEASE}" != "${LATEST_RELEASE}" ]]; then
+  if [[ "${LOCAL_RELEASE}" != "${LATEST_RELEASE}" ]] && [[ -n ${LATEST_RELEASE} ]]; then
     sed -i "s/WEBHOOK_VERSION ${LOCAL_RELEASE}/WEBHOOK_VERSION ${LATEST_RELEASE}/g" ${SCRIPTPATH}/../Dockerfile
     git commit -am "- bump webhook version to ${LATEST_RELEASE}"
     git push origin master
