@@ -1,8 +1,8 @@
 # Dockerfile for https://github.com/adnanh/webhook
 
-FROM        alpine
+FROM        almir/webhook
 
-MAINTAINER  Almir Dzinovic <almirdzin@gmail.com>
+MAINTAINER  Sean Payne <spayne@seanpayne.name>
 
 ENV         GOPATH /go
 ENV         SRCPATH ${GOPATH}/src/github.com/adnanh
